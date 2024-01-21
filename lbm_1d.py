@@ -18,9 +18,9 @@ vel_max = 0.15; #macroscopic fluid velocity
 n     = 1000; #number of grids
 t_max = 4000; #maximum time/iteration to be reached
 
-c_s = 1/sqrt(3); #speed of sound
-ma  = vel_max/c_s; #mach number
-tau = Diff_coeff/(c_s*c_s); #relaxation time
+cs = 1/sqrt(3); #speed of sound
+ma  = vel_max/cs; #mach number
+tau = Diff_coeff/(cs*cs); #relaxation time
 beta = 1/(2*tau+1); #factor considering the effect of relaxation time
 
 # define the exact solution
@@ -34,8 +34,8 @@ for i in range(n):
 # defining equilibrium populations
 feq = zeros((3,n));
 feq[0,:] = 2*rho*(2 - sqrt(1 + ma*ma))/3;
-feq[1,:] = rho*(( vel_max - c_s*c_s)/(2*c_s*c_s) + sqrt(1 + ma*ma))/3;
-feq[2,:] = rho*((-vel_max - c_s*c_s)/(2*c_s*c_s) + sqrt(1 + ma*ma))/3;
+feq[1,:] = rho*(( vel_max - cs*cs)/(2*c_s*cs) + sqrt(1 + ma*ma))/3;
+feq[2,:] = rho*((-vel_max - cs*cs)/(2*c_s*cs) + sqrt(1 + ma*ma))/3;
 
 #initial population is in equilibrium 
 f = feq;
@@ -47,8 +47,8 @@ for t in range(1,t_max):
 
     # defining equilibrium populations
     feq[0,:] = 2*rho*(2 - sqrt(1 + ma*ma))/3;
-    feq[1,:] = rho*(( vel_max - c_s*c_s)/(2*c_s*c_s) + sqrt(1 + ma*ma))/3;
-    feq[2,:] = rho*((-vel_max - c_s*c_s)/(2*c_s*c_s) + sqrt(1 + ma*ma))/3;
+    feq[1,:] = rho*(( vel_max - cs*cs)/(2*cs*cs) + sqrt(1 + ma*ma))/3;
+    feq[2,:] = rho*((-vel_max - cs*cs)/(2*cs*cs) + sqrt(1 + ma*ma))/3;
     
     # performing collision 
     f[0,:] = f[0,:] - 2*beta*(f[0,:] - feq[0,:]); 
